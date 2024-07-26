@@ -1,0 +1,275 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Nathan Ha</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<style>
+			.spacer {
+				margin-bottom: 10px;
+			}
+		</style>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="/" class="logo">
+									<span class="symbol"><img src="../images/logo.svg" alt="" /></span><span class="title">Nathan Ha</span>
+								</a>
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="/">Home</a></li>
+							<li><a href="../projects.html">Projects!</a></li>
+							<li><a href="../blogs.html">Blog</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1>Beginner Git For Those Who Think It's Still Confusing (July 2024)</h1>
+							<!-- <span class="image main"><img src="images/pic13.jpg" alt="" /></span> -->
+							<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel venenatis mauris vehicula hendrerit.</p> -->
+							<!-- <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p> -->
+							<p>
+								Git being confusing is a surprisingly controversial topic. On one hand, you have the guys going 
+								"It's so simple! What's confusing about it?" On the other hand, you have people saying the polar opposite.
+								For a while, I was very much the latter. After using it for a while, I think that most of my confusion 
+								has more or less faded with time. In this article I will try to address my past confusions 
+								in hopes that people who share them might understand git just a little better. 
+							</p>
+
+							<p>
+								<div class="spacer"></div>
+								<strong>Super Basics - Uploading Your Code</strong>
+								<div class="spacer"></div>
+								For students like myself, this is probably your first and primary use git. In general,
+								you would use git when you want to back up projects and whatever other code you have.
+								<div class="spacer"></div>
+								First, you have to create your repository. Honestly, you can just do this through the GitHub website,
+								so I won't go into too much detail. In case you didn't know, your respository is just a place where your code
+								goes. Think of it like a folder for a specific project.
+								<div class="spacer"></div>
+								Once you have your repository, and you have some code on it that you want to upload, how do you do it?
+								Drag and drop it like it's a Google Drive? Perhaps it's like Google Docs? No.
+								<div class="spacer"></div>
+								There are three commands to run for a straightforward upload (you can also use the GitHub gui, but who actually does that?):
+								<br>
+								<code>git add &lt;filename&gt;</code> or alternatively <code>git add .</code> to add every changed file.
+								<br>
+								<code>git commit -m "some message"</code>
+								<br>
+								<code>git push</code>
+								<br>
+								<br>
+								With those three, you can successfully push code to a remote repository (e.g. your github repo). 
+								But what are with those unintuitive commands, you may ask? I'll explain as best I can.
+								<div class="spacer"></div>
+								The first part of this I want to talk about it what a <strong>commit</strong> is. A commit is essentially
+								a snapshot of your code. Kind of like saying "Okay, this is what my code looks like at this point in time."
+								Once you make a commit, you can easily track the changes that happen during and after that commit. You can even revert
+								the commit, aka, undo the changes that you made in that commit.
+								<div class="spacer"></div>
+								Before you commit anything, though, you must <code>git add</code>. Also known as "<strong>staging</strong>" a file, this command
+								basically tells git "For my next commit, use this file". In other words, you're telling git to take a "snapshot"
+								of that file the next time you make a commit. Note that <code>git add .</code> is just a helpful shortcut
+								to commit every changed file at once.
+								<div class="spacer"></div>
+								One more command that is basically essential is: <br>
+								<code>git status</code>. It doesn't do much execept that it tells you what files were modified.
+								<div class="spacer"></div>
+								<img src = "../images/git-status-example.png">
+								<br>
+								In this picture, I just ran a git status on the very website's repository. As you can see, in green,
+								those are the files I typed <i>git add </i>&nbsp;for. In red, those are the files that I have modified,
+								but I have not staged them. Meaning that, if I do a <i>git commit</i>, they will not be included
+								in the "snapshot." In other words, if you look at the <code>git log</code> or look at the repository on GitHub,
+								you will not see the changes that I made to those files (in red). Also, you can use <code>git diff</code>
+								to see what lines were changed since the last commit, and what exactly you did to them.
+								<div class="spacer"></div>
+								Finally, you can <code>git push</code>. This command is the one that actually uploads your code. Rather than uploading
+								your entire folder verbatim, it only uploads the files that were changed, according to your commit.
+								Look at the above screenshot again. If I did a commit at that point, and did a git push, only base.html 
+								and blogs/beginner-git.html would be reflected onto the GitHub repository.
+							</p>
+
+							<p>
+								<div class="spacer"></div>
+								<strong>Vim Binds</strong>
+								<br>
+								Before we go any further, I just want to say that git uses vim as the default text editor.
+								I know how to use vim, so I personally really like that choice. For those who don't know vim, though
+								it's probably just a big middle finger.
+								<div class="spacer"></div>
+								You can google vim binds, but I will just list the most essential ones here. You can more or less edit any text
+								with these binds, albeit slower than if you knew the proper commands.
+								<div class="spacer"></div>
+								<code>h, j, k, l</code> moves the cursor left, down, up, right respectively.
+								<div class="spacer"></div>
+								<code>i</code> will take you to insert mode. This allows you to actually type text. Press <code>escape</code> to 
+									go back to normal mode.
+								<div class="spacer"></div>
+								<code>:q</code> will exit vim, and <code>:!q</code> will forcefully exit vim (won't save changes).
+								<br>
+								<code>:w</code> will save your changes. <code>:wq</code> will save your changes and exit afterwards.
+
+							</p>
+
+							<p>
+								<div class="spacer"></div>
+								<strong>Collaborative Coding - Branching and Merging</strong>
+								<br>
+								Now that you can upload code to your own repository, what about others? They won't just let you
+								<i>git push</i>&nbsp;into their repo so easily.
+								<div class="spacer"></div>
+								This is where branching comes in. I think the pretty diagrams you get from googling "git branch" already
+								give a pretty intuitive visual on what's going on, but just in case, I'll explain a little.
+								<div class="spacer"></div>
+								Basically, a branch is a way of making a copy of the main/master branch (basically, the place where all the MAIN code goes)
+								so that you can make whatever code changes you want without affecting the "real" code. Technically, you can make a branch
+								of any branch, not just main. Most of the time, though, you'll be branching off from main, in my experience.
+								<div class="spacer"></div>
+								The commands are pretty simple.
+								<br>
+								<code>git pull</code> is super important. It will "pull" the latest changes from the remote repository, and sync them up with
+									your local one. You need this when you are working in the same repository with other people, and they make changes
+									independent of you. Another one I use sometimes is <code>git pull origin main</code>. This one is useful when you are on your
+									own branch, but you need to get changes from main. This one will pull the changes from main, and merge them into your branch.
+								<br>
+								<code> git checkout &lt;branch name&gt;</code> will switch to a specific branch. 
+										Note that you can use this to switch to any branch, both local and remote, even if it's not named in <i>git branch</i>.
+								<br>
+								<code>git branch</code> will display all the branches that you have worked on locally. 
+										If you want to see the remote branches too, you can append a <code>-a</code> to the command
+										(or simply just look at the branches on GitHub).
+								<br>
+								<code>git checkout -b &lt;branch name&gt;</code> will create a new branch from whatever branch you are currently in and switch to it. I personally use this one way more
+								than using <i>git branch &lt;branch name&gt;</i>. It just saves some typing.
+								<br>
+								<code>git branch &lt;branch name&gt;</code> will create a new branch.
+										Note that it will not switch to the branch. You still need to do <i>git checkout</i>.
+								<br>
+								<code>git merge &lt;branch name&gt; </code> is not one that I use often, mostly because it is common practice to do pull requests first.
+									Just for the sake of completeness, though, this command simply takes the specified branch, and merges into your current branch.
+									Like, if for some reason, you want to merge your branch into main from the command line, you first switch to the main branch,
+									and then <i>git merge</i>&nbsp; it with your other branch.
+							</p>
+
+							<p>
+								<div class="spacer"></div>
+								<strong>Merge Conflics</strong>
+								<br>
+								<div class="spacer"></div>
+								Merge conflicts happen when code changes conflict with each other. Let's say you were editing foo.cpp.
+								You push your code to your branch and now you want to merge your branch with main. You attempt to do so,
+								but now you are blocked by something! It's a wild Merge conflict! It turns out, Timmy, who was working on the same
+								file, edited some lines on foo.cpp and pushed/merged them before you did!
+								<div class="spacer"></div>
+								Basically, since you and someone else edited the same lines, git doesn't know whose code to keep. A few tips 
+								for avoiding this are doing <i>git pull</i> or <i>git pull origin main</i>&nbsp; every time you start coding.
+								Also, do not work on the same branches at the same time. That's just asking for problems.
+								<div class="spacer"></div>
+								At this point, you have no choice but to resolve the merge conflict. I recommend using VS Code's merge conflict
+								resolver editing thing. It gives a nice side-by-side view of the conflicts, which is leagues ahead of git's
+								built-in way of showing it.
+								<div class="spacer"></div>
+								If you're not using the VS Code conflict resolution, then you should just google merge conflicts. There
+								are guides that are way better than I could explain. Something to remember, though, is that git will show
+								a chunk of code labeled HEAD, which usually means the remote repository. It's basically the code that was there
+								before you tried your conflict-ridden commit/merge. The other chunk of code is your own code. At that point, you have to
+								decide whose code to keep and remove.
+							</p>
+
+							<p>
+								<div class="spacer"></div>
+								<strong>Pull Requests</strong>
+								<br>
+								<div class="spacer"></div>
+								Pull requests are a procedure for branch merging. Let's say you made your feature or bug fix on your own branch,
+								and now you think it's ready to go into the main branch. You can't just merge your code just like that! You 
+								would have to (in bigger projects, at least) make a PR. It's basically asking for permission to merge your branch
+								into main. Usually, you would assign a couple reviewers, and they would either make some comments telling you to keep
+								fix things, or they would approve it to be merged.
+							</p>
+						</div>
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<!-- <section>
+								<h2>Get in touch</h2>
+								<form method="post" action="#">
+									<div class="fields">
+										<div class="field half">
+											<input type="text" name="name" id="name" placeholder="Name" />
+										</div>
+										<div class="field half">
+											<input type="email" name="email" id="email" placeholder="Email" />
+										</div>
+										<div class="field">
+											<textarea name="message" id="message" placeholder="Message"></textarea>
+										</div>
+									</div>
+									<ul class="actions">
+										<li><input type="submit" value="Send" class="primary" /></li>
+									</ul>
+								</form>
+							</section> -->
+							<section>
+								<h2>Connect!</h2>
+								<ul class="icons">
+									<!-- <li><a href="#" class="icon brands style2 fa-twitter"><span class="label">Twitter</span></a></li> -->
+									<!-- <li><a href="#" class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li> -->
+									<!-- <li><a href="#" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li> -->
+									<!-- <li><a href="#" class="icon brands style2 fa-dribbble"><span class="label">Dribbble</span></a></li> -->
+									<li><a href="https://github.com/nathan-ha" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
+									<!-- <li><a href="#" class="icon brands style2 fa-500px"><span class="label">500px</span></a></li> -->
+									<!-- <li><a href="#" class="icon solid style2 fa-phone"><span class="label">Phone</span></a></li> -->
+									<li><a href="https://www.linkedin.com/in/ha-nathan/" class="icon brands style2 fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+									<li><a href="mailto:nathanha562@gmail.com" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+								</ul>
+							</section>
+							<!-- <ul class="copyright">
+								<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul> -->
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/browser.min.js"></script>
+			<script src="../assets/js/breakpoints.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+
+	</body>
+</html>
