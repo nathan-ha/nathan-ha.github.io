@@ -1,9 +1,4 @@
 <!DOCTYPE HTML>
-<!--
-	Phantom by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 	<head>
 		<title>Project</title>
@@ -11,7 +6,19 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="../assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<style>
+			#container {
+				position: relative;
+				background: white;
+				border-style: solid;
+				border-color: black;
+			}
+			body {
+				padding-left: 10px;
+			}
 
+		</style>
+		
 		<script>
 			var balls = [];
 			var containerWidth = 1600; 
@@ -162,12 +169,12 @@
 			}
 	
 		</script>
-	  </head>
-	  <body>
+
+	</head>
+	<body>
 		<main>
-			<p>Scroll down the play with some of the parameters, and hit 'refresh'.&nbsp;&nbsp;You can see the source code at <a href="https://github.com/nathan-ha/BouncingBalls">https://github.com/nathan-ha/BouncingBalls</a></p>
-			
 			<div id="container"></div>
+			<p>Scroll down the play with some of the parameters, and hit 'refresh'.&nbsp;&nbsp;You can see the source code at <a href="https://github.com/nathan-ha/BouncingBalls">https://github.com/nathan-ha/BouncingBalls</a></p>
 			<script>
 				document.getElementById("container").style.width = containerWidth + "px";
 				document.getElementById("container").style.height = containerHeight + "px";
@@ -175,7 +182,7 @@
 				requestAnimationFrame(frame);
 			</script>
 		</main>
-	
+
 		<form id="inputs">
 			<label for="number_of_balls">Number of Balls:</label>
 			<input type="text" id="number_of_balls">
@@ -189,10 +196,7 @@
 			<input type="text" id="canvasHeight">
 			<br>    
 		</form>
-	
-		<button type="text" id="refresh" onclick="refreshScreen()">
-		<label for="refresh">Refresh</label>    
-		
+
 		<script>
 			//adds default values to the text box
 			document.getElementById('number_of_balls').value = numBalls;
@@ -200,75 +204,30 @@
 			document.getElementById('canvasWidth').value = containerWidth;
 			document.getElementById('canvasHeight').value = containerHeight;
 		</script>
-	
-	  </body>
 
-	</head>
-	<body class="is-preload">
-		<!-- Wrapper -->
-			<div id="wrapper">
+		<button type="text" id="refresh" onclick="refreshScreen()">
+			<label for="refresh">Refresh</label>    
+		</button>
 
-				<!-- Header -->
-					<header id="header">
-						<div class="inner">
-
-								<nav>
-									<ul>
-										<li><a href="#menu">Menu</a></li>
-									</ul>
-								</nav>
-
-						</div>
-					</header>
-
-				<!-- Menu -->
-					<nav id="menu">
-						<h2>Menu</h2>
-						<ul>
-							<li><a href="../">Home</a></li>
-							<li><a href="../projects">Projects</a></li>
-							<li><a href="../blogs">Blog</a></li>
-						</ul>
-					</nav>
-
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
-							 
-						</div>
-					</div>
-
-				<!-- Footer -->
-					<footer id="footer">
-						<div class="inner">
-							<section>
-								<h2>Connect!</h2>
-								<ul class="icons">
-									<!-- <li><a href="#" class="icon brands style2 fa-twitter"><span class="label">Twitter</span></a></li> -->
-									<!-- <li><a href="#" class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li> -->
-									<!-- <li><a href="#" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li> -->
-									<!-- <li><a href="#" class="icon brands style2 fa-dribbble"><span class="label">Dribbble</span></a></li> -->
-									<li><a href="https://github.com/nathan-ha" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
-									<!-- <li><a href="#" class="icon brands style2 fa-500px"><span class="label">500px</span></a></li> -->
-									<!-- <li><a href="#" class="icon solid style2 fa-phone"><span class="label">Phone</span></a></li> -->
-									<li><a href="https://www.linkedin.com/in/ha-nathan/" class="icon brands style2 fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-									<li><a href="mailto:nathanha562@gmail.com" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
-								</ul>
-							</section>
-							<!-- <ul class="copyright">
-								<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-							</ul> -->
-						</div>
-					</footer>
-
+		<!-- Footer -->
+		<footer id="footer">
+			<div class="inner">
+				<section>
+					<h2>Connect!</h2>
+					<ul class="icons">
+						<li><a href="https://github.com/nathan-ha" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
+						<li><a href="https://www.linkedin.com/in/ha-nathan/" class="icon brands style2 fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+						<li><a href="mailto:nathanha562@gmail.com" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+					</ul>
+				</section>
 			</div>
+		</footer>
 
 		<!-- Scripts -->
-			<script src="../assets/js/jquery.min.js"></script>
-			<script src="../assets/js/browser.min.js"></script>
-			<script src="../assets/js/breakpoints.min.js"></script>
-			<script src="../assets/js/util.js"></script>
-			<script src="../assets/js/main.js"></script>
-
+		<script src="../assets/js/jquery.min.js"></script>
+		<script src="../assets/js/browser.min.js"></script>
+		<script src="../assets/js/breakpoints.min.js"></script>
+		<script src="../assets/js/util.js"></script>
+		<script src="../assets/js/main.js"></script>
 	</body>
 </html>
