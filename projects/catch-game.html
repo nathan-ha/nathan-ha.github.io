@@ -1,189 +1,201 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<title>catch</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="../assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
-		<style>
-			#catchWindow {
-				width: 640px;
-				height: 480px;
-				position: relative;
-				background: lightblue;
-				/* background-image: url("https://cdn.discordapp.com/attachments/748382935819878440/1075627439834791997/image0.jpg");
+
+<head>
+	<title>catch</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="../assets/css/main.css" />
+	<noscript>
+		<link rel="stylesheet" href="../assets/css/noscript.css" />
+	</noscript>
+	<style>
+		#catchWindow {
+			width: 640px;
+			height: 480px;
+			position: relative;
+			background: lightblue;
+			/* background-image: url("https://cdn.discordapp.com/attachments/748382935819878440/1075627439834791997/image0.jpg");
 				background-position: 0px;
 				background-size: 640px;  */
-			}
-	
-			#playerBox {
-				width: 50px;
-				height: 50px;
-				position: absolute;
-				background: black;
-			}
-	
-			#apple {
-				background: red;
-				border-radius: 50%;
-				width: 30px;
-				height: 30px;
-				position:absolute;
-			}
-		</style>
-		
-		<script>
-			function drawCatch2() {
-				//canvas dimensions: 640x480p
-				const canvasWidth = 640;
-				const canvasHeight = 480;
-				const playerWidth = 50;
-				const appleWidth = 30;
-	
-				const player = document.getElementById("playerBox");
-				const apple = document.getElementById("apple");
-	
-				let score = 0;
-				let remainingApples = 20;
-	
-				//coordinates are measured from top-left
-				let xPlayer = 290;
-				let xApple = randomNumber(0, 590);
-				let yApple = 0;
-	
-				//handle user input
-				let keysPressed = {};
-				document.addEventListener('keydown', (event) => {
-					let movementScale = 1;
-	
-					keysPressed[event.key] = true;
-	
-					if (keysPressed["Shift"]) movementScale = 8;
-	
-					if (keysPressed["ArrowRight"]) {
-						xPlayer += 20 * movementScale;
-					}
-					else if (keysPressed["ArrowLeft"]) {
-						xPlayer -= 20 * movementScale;
-					}
-				});
-				document.addEventListener('keyup', (event) => {
-					delete keysPressed[event.key];
-				});
-	
-				function frame() {
-	
-					//in case player goes out of bounds
-					if (xPlayer <= 0) {
-						xPlayer = 0;
-					} 
-					else if (xPlayer >= canvasWidth - playerWidth) {
-						xPlayer = canvasWidth - playerWidth;
-					}
-					
-					//initial draw things
-					document.getElementById("score").innerHTML = "Score: " + score;
-					document.getElementById("applesRemaining").innerHTML = "Remaining: " + remainingApples;
-					player.style.background = "black";
-					player.style.bottom = "0px";
-					player.style.left = xPlayer + "px";
-					apple.style.top = yApple + "px";
-					apple.style.left = xApple + "px";
-	
-					//make apples fall
-					if (yApple >= canvasHeight - appleWidth) {
-	
-						//detects collisions and adds to score (as long as player touches the apple)
-						if (xPlayer <= xApple + appleWidth && xApple <= xPlayer + playerWidth) {
-							score++;
-							player.style.background = "yellow";
-						}
-	
-						xApple = randomNumber(0, canvasWidth - playerWidth);
-						yApple = 0;
-						remainingApples--;
-					}
-					else {
-						yApple += 5;
-					}
-	
-					if (remainingApples < 0) return; // stop the game when there are no more apples
-	
-					requestAnimationFrame(frame);
+		}
+
+		#playerBox {
+			width: 50px;
+			height: 50px;
+			position: absolute;
+			background: black;
+		}
+
+		#apple {
+			background: red;
+			border-radius: 50%;
+			width: 30px;
+			height: 30px;
+			position: absolute;
+		}
+		body {
+			padding-left: 10px;
+		}
+	</style>
+
+	<script>
+		function drawCatch2() {
+			//canvas dimensions: 640x480p
+			const canvasWidth = 640;
+			const canvasHeight = 480;
+			const playerWidth = 50;
+			const appleWidth = 30;
+
+			const player = document.getElementById("playerBox");
+			const apple = document.getElementById("apple");
+
+			let score = 0;
+			let remainingApples = 20;
+
+			//coordinates are measured from top-left
+			let xPlayer = 290;
+			let xApple = randomNumber(0, 590);
+			let yApple = 0;
+
+			//handle user input
+			let keysPressed = {};
+			document.addEventListener('keydown', (event) => {
+				let movementScale = 1;
+
+				keysPressed[event.key] = true;
+
+				if (keysPressed["Shift"]) movementScale = 8;
+
+				if (keysPressed["ArrowRight"]) {
+					xPlayer += 20 * movementScale;
 				}
-				requestAnimationFrame(frame); //calls requestAnimationFrame once in draw() and then recusively calls it in frame()
+				else if (keysPressed["ArrowLeft"]) {
+					xPlayer -= 20 * movementScale;
+				}
+			});
+			document.addEventListener('keyup', (event) => {
+				delete keysPressed[event.key];
+			});
+
+			function frame() {
+
+				//in case player goes out of bounds
+				if (xPlayer <= 0) {
+					xPlayer = 0;
+				}
+				else if (xPlayer >= canvasWidth - playerWidth) {
+					xPlayer = canvasWidth - playerWidth;
+				}
+
+				//initial draw things
+				document.getElementById("score").innerHTML = "Score: " + score;
+				document.getElementById("applesRemaining").innerHTML = "Remaining: " + remainingApples;
+				player.style.background = "black";
+				player.style.bottom = "0px";
+				player.style.left = xPlayer + "px";
+				apple.style.top = yApple + "px";
+				apple.style.left = xApple + "px";
+
+				//make apples fall
+				if (yApple >= canvasHeight - appleWidth) {
+
+					//detects collisions and adds to score (as long as player touches the apple)
+					if (xPlayer <= xApple + appleWidth && xApple <= xPlayer + playerWidth) {
+						score++;
+						player.style.background = "yellow";
+					}
+
+					xApple = randomNumber(0, canvasWidth - playerWidth);
+					yApple = 0;
+					remainingApples--;
+				}
+				else {
+					yApple += 5;
+				}
+
+				if (remainingApples < 0) return; // stop the game when there are no more apples
+
+				requestAnimationFrame(frame);
 			}
-	
-			function randomNumber(min, max) { //inclusive float
-				return Math.random() * (max - min) + min;
-			}
-		</script>
-	</head>
-	<!-- Header -->
-	<header id="header">
-		<div class="inner">
+			requestAnimationFrame(frame); //calls requestAnimationFrame once in draw() and then recusively calls it in frame()
+		}
 
-			<!-- Logo -->
-				<a href="/" class="logo">
-					<span class="symbol"><img src="../images/logo.svg" alt="" /></span><span class="title">Nathan Ha</span>
-				</a>
+		function randomNumber(min, max) { //inclusive float
+			return Math.random() * (max - min) + min;
+		}
+	</script>
+</head>
+<!-- Header -->
+<header id="header">
+	<div class="inner">
 
-			<!-- Nav -->
-				<nav>
-					<ul>
-						<li><a href="#menu">Menu</a></li>
-					</ul>
-				</nav>
+		<!-- Logo -->
+		<a href="/" class="logo">
+			<span class="symbol"><img src="../images/logo.svg" alt="" /></span><span class="title">Nathan Ha</span>
+		</a>
 
+		<!-- Nav -->
+		<nav>
+			<ul>
+				<li><a href="#menu">Menu</a></li>
+			</ul>
+		</nav>
+
+	</div>
+	<p>You can see the source code at <a
+			href="https://github.com/nathan-ha/Catch">https://github.com/nathan-ha/Catch</a></p>
+</header>
+<!-- Menu -->
+<nav id="menu">
+	<h2>Menu</h2>
+	<ul>
+		<li><a href="/">Home</a></li>
+		<li><a href="projects">Projects</a></li>
+		<li><a href="blogs">Blogs</a></li>
+	</ul>
+</nav>
+
+<body>
+
+	<main>
+		<p>controls: left and right arrow keys, shift to go faster</p>
+		<p id="score"></p>
+		<div id="catchWindow">
+			<div id="apple"></div>
+			<div id="playerBox"></div>
 		</div>
-		<p>You can see the source code at <a href="https://github.com/nathan-ha/Catch">https://github.com/nathan-ha/Catch</a></p>
-	</header>
-	<!-- Menu -->
-	<nav id="menu">
-		<h2>Menu</h2>
-		<ul>
-			<li><a href="/">Home</a></li>
-			<li><a href="projects">Projects</a></li>
-			<li><a href="blogs">Blogs</a></li>
-		</ul>
-	</nav>
-	<body>
 
-		<main>
-			<p>controls: left and right arrow keys, shift to go faster</p>
-			<p id="score"></p>
-			<div id="catchWindow">
-				<div id ="apple"></div>
-				<div id="playerBox"></div>
-			</div>
+		<p id="applesRemaining"></p>
 
-			<p id="applesRemaining"></p>
+	</main>
+	<script>
+		drawCatch2();
+	</script>
 
-		</main>
-			<script>
-				drawCatch2();
-			</script>
-		
-		<!-- Footer -->
-		<footer id="footer">
-			<div class="inner">
-				<section>
-					<h2>Connect!</h2>
-					<ul class="icons">
-						<li><a href="https://github.com/nathan-ha" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
-						<li><a href="https://www.linkedin.com/in/ha-nathan/" class="icon brands style2 fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-						<li><a href="mailto:nathanha562@gmail.com" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
-					</ul>
-				</section>
-			</div>
-		</footer>
+	<!-- Footer -->
+	<footer id="footer">
+		<div class="inner">
+			<section>
+				<h2>Connect!</h2>
+				<ul class="icons">
+					<li><a href="https://github.com/nathan-ha" class="icon brands style2 fa-github"><span
+								class="label">GitHub</span></a></li>
+					<li><a href="https://www.linkedin.com/in/ha-nathan/" class="icon brands style2 fa-linkedin-in"><span
+								class="label">LinkedIn</span></a></li>
+					<li><a href="mailto:nathanha562@gmail.com" class="icon solid style2 fa-envelope"><span
+								class="label">Email</span></a></li>
+				</ul>
+			</section>
+		</div>
+	</footer>
 
-		<!-- Scripts -->
-		<script src="../assets/js/jquery.min.js"></script>
-		<script src="../assets/js/browser.min.js"></script>
-		<script src="../assets/js/breakpoints.min.js"></script>
-		<script src="../assets/js/util.js"></script>
-		<script src="../assets/js/main.js"></script>
-	</body>
+	<!-- Scripts -->
+	<script src="../assets/js/jquery.min.js"></script>
+	<script src="../assets/js/browser.min.js"></script>
+	<script src="../assets/js/breakpoints.min.js"></script>
+	<script src="../assets/js/util.js"></script>
+	<script src="../assets/js/main.js"></script>
+</body>
+
 </html>

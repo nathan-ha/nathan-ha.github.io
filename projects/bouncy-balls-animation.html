@@ -1,260 +1,269 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<title>Project</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="../assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
-		<style>
-			#container {
-				position: relative;
-				background: white;
-				border-style: solid;
-				border-color: black;
+
+<head>
+	<title>Project</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="../assets/css/main.css" />
+	<noscript>
+		<link rel="stylesheet" href="../assets/css/noscript.css" />
+	</noscript>
+	<style>
+		#container {
+			position: relative;
+			background: white;
+			border-style: solid;
+			border-color: black;
+		}
+
+		body {
+			padding-left: 10px;
+		}
+	</style>
+
+	<script>
+		var balls = [];
+		var containerWidth = 1600;
+		var containerHeight = 800;
+		var ballDiameter = 100;
+		var numBalls = 20;
+
+		function randomInt(min, max) {
+			min = Math.ceil(min);
+			max = Math.floor(max);
+			return Math.floor(Math.random() * (max - min + 1)) + min;
+		}
+		function randomFloat(min, max) {
+			return Math.random() * (max - min) + min;
+		}
+
+		function createBalls(numBalls) {
+			for (let i = 0; i < numBalls; i++) {
+				let ballObj = {
+					id: "ball_" + i.toString(), //id of the div
+					x: randomInt(0, containerWidth - ballDiameter), //generates random coordinates on canvas
+					y: randomInt(0, containerHeight - ballDiameter),
+					xDirection: randomInt(0, 1), //1 for right, 0 for left
+					yDirection: randomInt(0, 1), //1 for down, 0 for up
+					xSpeed: randomFloat(0.5, 6),
+					ySpeed: randomFloat(0.5, 6)
+				};
+
+				balls.push(ballObj); //saves the object into a list
+
+				let ball = document.createElement("div"); //creates new div
+				ball.setAttribute("id", ballObj.id) //gives the div an id
+
+				//style each element
+				ball.style.position = "absolute";
+				ball.style.width = ballDiameter + "px";
+				ball.style.height = ballDiameter + "px";
+				ball.style.top = ballObj.x + "px";
+				ball.style.left = ballObj.y + "px";
+				ball.style.borderRadius = "50%";
+				ball.style.opacity = "80%";
+				ball.style.background = "rgb(" + randomInt(0, 255).toString() + ", "
+					+ randomInt(0, 255).toString() + ", "
+					+ randomInt(0, 255).toString() + ")";
+
+				document.getElementById("container").appendChild(ball); //add the new element to the html doc inside of the container div
 			}
-			body {
-				padding-left: 10px;
+		}
+
+		function moveBall(ball) {
+			if (ball.xDirection == 1) {
+				ball.x += ball.xSpeed;
+			}
+			else {
+				ball.x -= ball.xSpeed;
 			}
 
-		</style>
-		
-		<script>
-			var balls = [];
-			var containerWidth = 1600; 
-			var containerHeight = 800;
-			var ballDiameter = 100;
-			var numBalls = 20;
-	
-			function randomInt(min, max) {
-				min = Math.ceil(min);
-				max = Math.floor(max);
-				return Math.floor(Math.random() * (max - min + 1)) + min;
+			if (ball.yDirection == 1) {
+				ball.y += ball.ySpeed;
 			}
-			function randomFloat(min, max) {
-				return Math.random() * (max - min) + min;
+			else {
+				ball.y -= ball.ySpeed;
 			}
-	
-			function createBalls(numBalls) {
-				for (let i = 0; i < numBalls; i++) {
-					let ballObj = {
-						id: "ball_" + i.toString(), //id of the div
-						x: randomInt(0, containerWidth - ballDiameter), //generates random coordinates on canvas
-						y: randomInt(0, containerHeight - ballDiameter),
-						xDirection: randomInt(0, 1), //1 for right, 0 for left
-						yDirection: randomInt(0, 1), //1 for down, 0 for up
-						xSpeed: randomFloat(0.5, 6),
-						ySpeed: randomFloat(0.5, 6)
-					};
-	
-					balls.push(ballObj); //saves the object into a list
-	
-					let ball = document.createElement("div"); //creates new div
-					ball.setAttribute("id", ballObj.id) //gives the div an id
-	
-					//style each element
-					ball.style.position = "absolute";
-					ball.style.width = ballDiameter + "px";
-					ball.style.height = ballDiameter + "px";
-					ball.style.top = ballObj.x + "px";
-					ball.style.left = ballObj.y + "px";
-					ball.style.borderRadius = "50%";
-					ball.style.opacity = "80%";
-					ball.style.background = "rgb(" + randomInt(0, 255).toString() + ", " 
-												   + randomInt(0, 255).toString() + ", "
-												   + randomInt(0, 255).toString() + ")";
-				
-					document.getElementById("container").appendChild(ball); //add the new element to the html doc inside of the container div
-				}
-			}
-	
-			function moveBall(ball) {
-				if (ball.xDirection == 1) {
-						ball.x += ball.xSpeed;
-					}
-				else {
-					ball.x -= ball.xSpeed;
-				}
-	
-				if (ball.yDirection == 1) {
-					ball.y += ball.ySpeed;
-				}
-				else {
-					ball.y -= ball.ySpeed;
-				}
-			}
-	
-			function handleCollisions(ball) {
-				//check for collision with boundaries
-				if (ball.x >= containerWidth - ballDiameter) {
-						ball.xDirection = 0;
-				}
-				else if (ball.x <= 0) {
-					ball.xDirection = 1;
-				}
-	
-				if (ball.y >= containerHeight - ballDiameter) {
-					ball.yDirection = 0;
-				}
-				else if (ball.y <= 0) {
-					ball.yDirection = 1;
-				}
-			}
-	
-			function frame() {
-				for (let i = 0; i < balls.length; i++) {
-					//initial draw balls
-					document.getElementById(balls[i].id).style.left = balls[i].x + "px";
-					document.getElementById(balls[i].id).style.top = balls[i].y + "px";
-	
-					handleCollisions(balls[i]);
-					moveBall(balls[i]);
-				}
-				requestAnimationFrame(frame);
-			}
-	
-			//not to be confused with frame -- this one deletes everything and recreates everything from scratch
-			function refreshScreen() {
-				//changes ball width
-				let ballDiameterFromInput = Number(document.getElementById("ballDiameter").value);
-				if (ballDiameterFromInput <= 1) {
-					ballDiameter = 1;
-				}
-				else {
-					ballDiameter = ballDiameterFromInput;
-				}
-				//gets number of balls
-				let numBallsFromInput = Number(document.getElementById("number_of_balls").value);
-				if (numBallsFromInput <= 0) {
-					numBalls = 0;
-				}
-				else {
-					numBalls = numBallsFromInput;
-				}
-				//changes container width and height
-				let containerWidthFromInput = Number(document.getElementById("canvasWidth").value);
-				if (containerWidthFromInput <= ballDiameter) {
-					containerWidth = ballDiameter;
-				}
-				else {
-					containerWidth = containerWidthFromInput;
-				}
-				let containerHeightFromInput = Number(document.getElementById("canvasHeight").value);
-				if (containerHeightFromInput <= ballDiameter) {
-					containerHeight = ballDiameter;
-				}
-				else {
-					containerHeight = containerHeightFromInput;
-				}
-	
-	
-				//resize the canvas
-				document.getElementById("container").style.width = containerWidth + "px";
-				document.getElementById("container").style.height = containerHeight + "px";
-	
-				//refreshes text input values (mostly in case the value goes out of range)
-				document.getElementById('number_of_balls').value = numBalls;
-				document.getElementById('ballDiameter').value = ballDiameter;
-				document.getElementById('canvasWidth').value = containerWidth;
-				document.getElementById('canvasHeight').value = containerHeight;
-	
-				//delete all old divs
-				for (let i = 0; i < balls.length; i++) {
-					document.getElementById(balls[i].id).remove();
-				}
-				//clear the ball list and make new ones
-				balls = [];
-				createBalls(numBalls);
-	
-			}
-	
-		</script>
+		}
 
-	</head>
-	<!-- Header -->
-	<header id="header">
-		<div class="inner">
+		function handleCollisions(ball) {
+			//check for collision with boundaries
+			if (ball.x >= containerWidth - ballDiameter) {
+				ball.xDirection = 0;
+			}
+			else if (ball.x <= 0) {
+				ball.xDirection = 1;
+			}
 
-			<!-- Logo -->
-				<a href="/" class="logo">
-					<span class="symbol"><img src="../images/logo.svg" alt="" /></span><span class="title">Nathan Ha</span>
-				</a>
+			if (ball.y >= containerHeight - ballDiameter) {
+				ball.yDirection = 0;
+			}
+			else if (ball.y <= 0) {
+				ball.yDirection = 1;
+			}
+		}
 
-			<!-- Nav -->
-				<nav>
-					<ul>
-						<li><a href="#menu">Menu</a></li>
-					</ul>
-				</nav>
+		function frame() {
+			for (let i = 0; i < balls.length; i++) {
+				//initial draw balls
+				document.getElementById(balls[i].id).style.left = balls[i].x + "px";
+				document.getElementById(balls[i].id).style.top = balls[i].y + "px";
 
-		</div>
-		<p>Scroll down the play with some of the parameters, and hit 'refresh'.&nbsp;&nbsp;You can see the source code at <a href="https://github.com/nathan-ha/BouncingBalls">https://github.com/nathan-ha/BouncingBalls</a></p>
-	</header>
-	<!-- Menu -->
-	<nav id="menu">
-		<h2>Menu</h2>
-		<ul>
-			<li><a href="/">Home</a></li>
-			<li><a href="projects">Projects</a></li>
-			<li><a href="blogs">Blogs</a></li>
-		</ul>
-	</nav>
-	<body>
-		<main>
-			<div id="container"></div>
-			<script>
-				document.getElementById("container").style.width = containerWidth + "px";
-				document.getElementById("container").style.height = containerHeight + "px";
-				createBalls(numBalls);
-				requestAnimationFrame(frame);
-			</script>
-		</main>
+				handleCollisions(balls[i]);
+				moveBall(balls[i]);
+			}
+			requestAnimationFrame(frame);
+		}
 
-		<form id="inputs">
-			<label for="number_of_balls">Number of Balls:</label>
-			<input type="text" id="number_of_balls">
-	
-			<label for="ballDiameter">Ball Diameter (px):</label>
-			<input type="text" id="ballDiameter">
-	
-			<label for="canvasWidth">Canvas Width (px):</label>
-			<input type="text" id="canvasWidth">
-			<label for="canvasHeight">Canvas Height (px):</label>
-			<input type="text" id="canvasHeight">
-			<br>    
-		</form>
+		//not to be confused with frame -- this one deletes everything and recreates everything from scratch
+		function refreshScreen() {
+			//changes ball width
+			let ballDiameterFromInput = Number(document.getElementById("ballDiameter").value);
+			if (ballDiameterFromInput <= 1) {
+				ballDiameter = 1;
+			}
+			else {
+				ballDiameter = ballDiameterFromInput;
+			}
+			//gets number of balls
+			let numBallsFromInput = Number(document.getElementById("number_of_balls").value);
+			if (numBallsFromInput <= 0) {
+				numBalls = 0;
+			}
+			else {
+				numBalls = numBallsFromInput;
+			}
+			//changes container width and height
+			let containerWidthFromInput = Number(document.getElementById("canvasWidth").value);
+			if (containerWidthFromInput <= ballDiameter) {
+				containerWidth = ballDiameter;
+			}
+			else {
+				containerWidth = containerWidthFromInput;
+			}
+			let containerHeightFromInput = Number(document.getElementById("canvasHeight").value);
+			if (containerHeightFromInput <= ballDiameter) {
+				containerHeight = ballDiameter;
+			}
+			else {
+				containerHeight = containerHeightFromInput;
+			}
 
-		<script>
-			//adds default values to the text box
+
+			//resize the canvas
+			document.getElementById("container").style.width = containerWidth + "px";
+			document.getElementById("container").style.height = containerHeight + "px";
+
+			//refreshes text input values (mostly in case the value goes out of range)
 			document.getElementById('number_of_balls').value = numBalls;
 			document.getElementById('ballDiameter').value = ballDiameter;
 			document.getElementById('canvasWidth').value = containerWidth;
 			document.getElementById('canvasHeight').value = containerHeight;
+
+			//delete all old divs
+			for (let i = 0; i < balls.length; i++) {
+				document.getElementById(balls[i].id).remove();
+			}
+			//clear the ball list and make new ones
+			balls = [];
+			createBalls(numBalls);
+
+		}
+
+	</script>
+
+</head>
+<!-- Header -->
+<header id="header">
+	<div class="inner">
+
+		<!-- Logo -->
+		<a href="/" class="logo">
+			<span class="symbol"><img src="../images/logo.svg" alt="" /></span><span class="title">Nathan Ha</span>
+		</a>
+
+		<!-- Nav -->
+		<nav>
+			<ul>
+				<li><a href="#menu">Menu</a></li>
+			</ul>
+		</nav>
+
+	</div>
+	<p>Scroll down the play with some of the parameters, and hit 'refresh'.&nbsp;&nbsp;You can see the source code at <a
+			href="https://github.com/nathan-ha/BouncingBalls">https://github.com/nathan-ha/BouncingBalls</a></p>
+</header>
+<!-- Menu -->
+<nav id="menu">
+	<h2>Menu</h2>
+	<ul>
+		<li><a href="/">Home</a></li>
+		<li><a href="projects">Projects</a></li>
+		<li><a href="blogs">Blogs</a></li>
+	</ul>
+</nav>
+
+<body>
+	<main>
+		<div id="container"></div>
+		<script>
+			document.getElementById("container").style.width = containerWidth + "px";
+			document.getElementById("container").style.height = containerHeight + "px";
+			createBalls(numBalls);
+			requestAnimationFrame(frame);
 		</script>
+	</main>
 
-		<button type="text" id="refresh" onclick="refreshScreen()">
-			<label for="refresh">Refresh</label>    
-		</button>
+	<form id="inputs">
+		<label for="number_of_balls">Number of Balls:</label>
+		<input type="text" id="number_of_balls">
 
-		<!-- Footer -->
-		<footer id="footer">
-			<div class="inner">
-				<section>
-					<h2>Connect!</h2>
-					<ul class="icons">
-						<li><a href="https://github.com/nathan-ha" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
-						<li><a href="https://www.linkedin.com/in/ha-nathan/" class="icon brands style2 fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-						<li><a href="mailto:nathanha562@gmail.com" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
-					</ul>
-				</section>
-			</div>
-		</footer>
+		<label for="ballDiameter">Ball Diameter (px):</label>
+		<input type="text" id="ballDiameter">
 
-		<!-- Scripts -->
-		<script src="../assets/js/jquery.min.js"></script>
-		<script src="../assets/js/browser.min.js"></script>
-		<script src="../assets/js/breakpoints.min.js"></script>
-		<script src="../assets/js/util.js"></script>
-		<script src="../assets/js/main.js"></script>
-	</body>
+		<label for="canvasWidth">Canvas Width (px):</label>
+		<input type="text" id="canvasWidth">
+		<label for="canvasHeight">Canvas Height (px):</label>
+		<input type="text" id="canvasHeight">
+		<br>
+	</form>
+
+	<script>
+		//adds default values to the text box
+		document.getElementById('number_of_balls').value = numBalls;
+		document.getElementById('ballDiameter').value = ballDiameter;
+		document.getElementById('canvasWidth').value = containerWidth;
+		document.getElementById('canvasHeight').value = containerHeight;
+	</script>
+
+	<button type="text" id="refresh" onclick="refreshScreen()">
+		<label for="refresh">Refresh</label>
+	</button>
+
+	<!-- Footer -->
+	<footer id="footer">
+		<div class="inner">
+			<section>
+				<h2>Connect!</h2>
+				<ul class="icons">
+					<li><a href="https://github.com/nathan-ha" class="icon brands style2 fa-github"><span
+								class="label">GitHub</span></a></li>
+					<li><a href="https://www.linkedin.com/in/ha-nathan/" class="icon brands style2 fa-linkedin-in"><span
+								class="label">LinkedIn</span></a></li>
+					<li><a href="mailto:nathanha562@gmail.com" class="icon solid style2 fa-envelope"><span
+								class="label">Email</span></a></li>
+				</ul>
+			</section>
+		</div>
+	</footer>
+
+	<!-- Scripts -->
+	<script src="../assets/js/jquery.min.js"></script>
+	<script src="../assets/js/browser.min.js"></script>
+	<script src="../assets/js/breakpoints.min.js"></script>
+	<script src="../assets/js/util.js"></script>
+	<script src="../assets/js/main.js"></script>
+</body>
+
 </html>
