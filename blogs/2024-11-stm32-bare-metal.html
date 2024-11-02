@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<!--
+    Phantom by HTML5 UP
+    html5up.net | @ajlkn
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+    <head>
+        <title>Nathan Ha</title>
+        <meta charset="utf-8" />
+        <link rel="icon" type="images" href="../images/favicon-32x32.png" sizes="32x32" />
+        <link rel="icon" type="images" href="../images/favicon-16x16.png" sizes="16x16" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="../assets/css/main.css" />
+        <noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+        <style>
+            .spacer {
+                margin-bottom: 10px;
+            }
+        </style>
+    </head>
+    <body class="is-preload">
+        <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Header -->
+            <header id="header">
+                <div class="inner">
+                    <!-- Logo -->
+                    <a href="/" class="logo">
+                        <span class="symbol"><img src="../images/favicon.ico" alt="" /></span><span class="title">Nathan Ha</span>
+                    </a>
+                    <!-- Nav -->
+                    <nav>
+                        <ul>
+                            <li><a href="#menu">Menu</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+
+            <!-- Menu -->
+            <nav id="menu">
+                <h2>Menu</h2>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="../projects">Projects</a></li>
+                    <li><a href="../blogs">Blog</a></li>
+                </ul>
+            </nav>
+
+            <!-- Main -->
+            <div id="main">
+                <div class="inner">
+                    <h1>STM32 Bare-Metal Programming Progress</h1>
+                    <!-- Your content goes here -->
+										<p>
+											This page mainly serves to document any progress I make with the STM board that I bought.
+											My goal is to learn how to do low-level register programming without the use of the IDE or the
+											HAL. While this wouldn't be my first time doing register programming, this would be my first time
+											doing everything from scratch (especially ARM-Cortex).
+											<div class="spacer"></div>
+										</p>
+										
+										<h2>November 11, 2024</h2>
+										<p>
+											At this point, I managed to set up my build environment and managed to flash a very 
+											simple blinking code onto the board. This part took a surprisingly long time to do,
+											as I have been trying to do this on and off for a few weeks now. I bought this ST board
+											because I believe that I have gotten far enough with my Atmel AVR board. ARM, while it
+											looks a little more complicated, seems more interesting to me.
+											<div class="spacer"></div>
+											At first, I tried using Keil/ARM Studio, but after much toil, I realized they literally did not support
+											the chip I was using (STM32F303RE). After that, I decided to give up on IDEs. I do have the STM32 Cube IDE,
+											which works, but I really do not like it, so I avoid it if I can. It is useful for generation boilerplate code
+											like the linker script, though.
+											<div class="spacer"></div>
+											In the end, I stuch with the good ol Makefile to build and flash my stuff. I am using the 
+											ARM GCC compiler, and I flash the code using ST-LINK. Much of the necessary code
+											for programming the registers was taken from the <a href="https://github.com/STMicroelectronics/cmsis-device-f3">CMSIS repository by STM</a>.
+											It contains header files—defining all the registers so that I don't have to.
+											<div class="spacer"></div>
+											I actually did all that pretty quickly, but for some reason, nothing was working. 
+											In turns out, there was also just a lot of boilerplate set up that needed to be done.
+											Things like defining my own syscalls, handlers and set up functions	were things that I did
+											not think I'd need. I do want to say that I needed to use the STM Cube IDE
+											because it auto-generated a linker script. Also, since I did not set up debugging yet,
+											I might have to use the IDE if I want to debug (for now).										
+										</p>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer id="footer">
+                <div class="inner">
+                    <section>
+                        <h2>Connect!</h2>
+                        <ul class="icons">
+                            <li><a href="https://github.com/nathan-ha" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
+                            <li><a href="https://www.linkedin.com/in/ha-nathan/" class="icon brands style2 fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+                            <li><a href="mailto:nathanha562@gmail.com" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+                        </ul>
+                    </section>
+                </div>
+            </footer>
+
+        </div>
+
+        <!-- Scripts -->
+        <script src="../assets/js/jquery.min.js"></script>
+        <script src="../assets/js/browser.min.js"></script>
+        <script src="../assets/js/breakpoints.min.js"></script>
+        <script src="../assets/js/util.js"></script>
+        <script src="../assets/js/main.js"></script>
+
+    </body>
+</html>
