@@ -1,0 +1,243 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+	<title>Solar Tracker</title>
+	<meta charset="utf-8" />
+	<link rel="icon" type="images" href="../images/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="images" href="../images/favicon-16x16.png" sizes="16x16" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="../assets/css/main.css" />
+	<noscript>
+		<link rel="stylesheet" href="../assets/css/noscript.css" />
+	</noscript>
+</head>
+
+<body class="is-preload">
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Header -->
+		<header id="header">
+			<div class="inner">
+
+				<!-- Logo -->
+				<a href="/" class="logo">
+					<span class="symbol"><img src="../images/favicon.ico" alt="" /></span><span class="title">Nathan Ha</span>
+				</a>
+
+
+				<!-- Nav -->
+				<nav>
+					<ul>
+						<li><a href="#menu">Menu</a></li>
+					</ul>
+				</nav>
+
+			</div>
+		</header>
+
+		<!-- Menu -->
+		<nav id="menu">
+			<h2>Menu</h2>
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="../projects">Projects</a></li>
+				<li><a href="../blogs">Blog</a></li>
+			</ul>
+		</nav>
+
+		<!-- Main -->
+		<div id="main">
+			<div class="inner">
+				<h1>Solar Tracker</h1>
+				<p><a href="https://github.com/nathan-ha/embedded-projects/tree/k64-solar-tracker/src">Source Code (Click
+						here)</a></p>
+				<!-- <span class="image main"><img src="images/pic13.jpg" alt="" /></span> -->
+				<p>The main goal of this project was to create an automated solar panel that would track where the sun's peak
+					light would be. Why did I choose to do this project? Because it looked cool.
+				</p>
+				<iframe width="1260" height="709" src="https://www.youtube.com/embed/IjlK_h9OzzU"
+					title="Solar Tracker Project Demo" frameborder="0"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+				<br><br><br>
+
+				<strong>Components</strong>
+				<ul>
+					<li>MK64 FRDM Board - Uses an ARM microcontroller which controlled all of the movement and sensor logic for
+						this project.</li>
+					<li>4 Photoresistors - Sensors which cary their resistances based on the current light levels. Used for
+						determining the direction of sunlight.</li>
+					<li>2 stepper motors - Responsible for the movement of the panel itself.</li>
+					<li>Joystick - Used to manually adjust the rotation of the panel if needed.</li>
+					<li>Breadboard</li>
+					<li>4 10k resistors</li>
+					<li>2 Stepper motor driver module</li>
+					<li>Jumper wires</li>
+				</ul>
+
+				<br>
+				<strong>Schematic</strong>
+				<br>
+				<img src="../images/solar_tracker_schematic.png" alt="Wiring Diagram width=" 800" height="800">
+				<br>
+				<br>
+				<strong>Block Diagram</strong>
+				<br>
+				<img src="../images/solar_tracker_block_diagram.png" alt="Wiring Diagram width=" 800" height="800">
+				<br>
+
+				<strong>Summary of Design</strong>
+				<br>
+				The main goal of this project was to create a simulated automated solar panel that would track where the sun’s
+				peak light would be. Using four photoresistors, it would track the light intensity in four directions,
+				represented
+				by north, south, west, and east. In addition to the four cardinal directions, I also used combinations of these
+				four photoresistors to obtain diagonal positions (northwest, northeast, southeast, southwest). There is also a
+				fifth, neutral position, where the solar tracker is facing straight up.
+				<br><br>
+				The movement itself is done by using two 5V stepper motors. One is responsible for horizontal movement, and the
+				other vertical. Both of these are controlled by the K64.
+				<br><br>
+				The FRDM-K64F board is the main controller. It is responsible for reading the values of the photoresistor or the
+				joystick using ADC, and it controls the stepper motors using GPIO. It also executes all the logic needed for
+				solar tracking.
+				<br><br>
+				I also implemented a manual control system, utilizing a joystick to control the position of the stepper motors.
+				This was useful for various reasons, but the main reason was to provide a convenient way to reset the motor
+				positions.
+				<br><br>
+				<strong>System Design</strong>
+				<br>
+				In the manual mode state, the user will move the joystick, which
+				will cause the corresponding horizontal and vertical motors to rotate. There is an LED attached to Port E, pin
+				26, that will light up in manual mode. In order to switch to automatic mode, the user will press on the joystick
+				button (Joystick_SW) to toggle the manual_mode variable. When this happens, the position of the stepper motors
+				will be solely determined by the state of the photoresistors. The following image represents the main finite
+				state machine (FSM) used.
+				<img src="../images/solar_tracker_main_fsm.png" alt="Wiring Diagram width=" 400" height="300">
+				<br>
+				<br>
+				Now let's talk about automatic solar tracking.
+				The main principle behind the automatic movement is that starting from a neutral, home position, the motors will
+				move the solar panel towards the position with the most light. For example, if the north and west photoresistors
+				are greater than the south and east photoresistors, the solar panel will move towards the northwest, stopping
+				once the horizontal stepper motor rotated is 45 degrees counterclockwise, and the vertical motor 45 degrees from
+				the horizontal. If all the photoresistors receive roughly equal lighting, then the solar tracker will be in the
+				home position, which is facing straight upwards.
+				<br><br>
+				Every time the direction of the light source changes, the solar panel will first return to home position before
+				rotating to the new direction. This was mostly done because it was the simplest implementation I could think of
+				using stepper motors.
+				<br><br>
+				The following image is the FSM for auto solar tracking.<br>
+				<img src="../images/solar_tracker_auto_tracking_fsm.png" alt="Wiring Diagram width=" 800" height="800">
+				<img src="../images/solar_tracker_auto_tracking_fsm2.png" alt="Wiring Diagram width=" 800" height="400">
+				<br>
+				Here, rot_y(x) corresponds to the rotation of the vertical stepper motor by x * 45/2 degrees. This means that,
+				in practice, the vertical rotation will be at most 45 degrees. rot_x(x) represent the rotation of the horizontal
+				stepper motor by x * 45 degrees.
+				<br><br>
+				The various state transition conditions are represented below. P_x represents the ADC reading value of the
+				photoresistor in the x direction. Also, the arrows in the below drawings don’t mean anything.
+
+				<br><br><br>
+				<strong>Some Discussion</strong>
+				<br>
+				The main challenge of this project was the ADC readings were inconsistent between the four photoresistors, which
+				each one reading different values in response to the same light. I were able to get around this by manually
+				checking the range of values that each photoresistor would read, and mapping them to a value between 0 and 255.
+				These range of values also varied significantly every time something would change–like if I changed rooms or
+				moved a wire, so I would have to re-measure the range of reading values each time in order for solar tracker to
+				work properly.
+				<br><br>
+				Something else that I would like to note is that the current solar tracker is probably not very energy efficient. This is
+				due to the fact that it
+				uses two 5V motors which potentially draw too much current. There is also the fact that, due to the way the code
+				was designed, the K64 is constantly running and polling. This could be fixed by using smaller, lower powered
+				motors, and using interrupt driven actions. Also, realistically, since the sun’s movement is rather slow, the
+				K64 probably only needs to check the lighting once every few minutes, rather than constantly.
+				<br><br>
+				Another possible improvement could be using servo motors rather than stepper motors. While stepper motors have
+				their merits, they could not achieve absolute positioning. If I were to, for example, turn the solar tracker
+				off, and turn it back on, there would be no way for the K64 to know where the stepper motors are at that point.
+				It was for this reason that I needed a manual mode, a home position, and such a complicated state machine. If
+				I were to use servo motors, I could tell the motors exactly what position to be in without regard for the
+				previous position. This could potentially make the implementation much simpler, and make the tracker movement
+				more efficient, since I won’t have to return to home every time the light moves.
+				<br><br>
+				<iframe width="1260" height="709" src="https://www.youtube.com/embed/7rsoAT5S9Cg" title="Solar Tracker Demo 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+
+
+
+
+				<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel venenatis mauris vehicula hendrerit.</p> -->
+				<!-- <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p> -->
+			</div>
+		</div>
+
+		<!-- Footer -->
+		<footer id="footer">
+			<div class="inner">
+				<!-- <section>
+								<h2>Get in touch</h2>
+								<form method="post" action="#">
+									<div class="fields">
+										<div class="field half">
+											<input type="text" name="name" id="name" placeholder="Name" />
+										</div>
+										<div class="field half">
+											<input type="email" name="email" id="email" placeholder="Email" />
+										</div>
+										<div class="field">
+											<textarea name="message" id="message" placeholder="Message"></textarea>
+										</div>
+									</div>
+									<ul class="actions">
+										<li><input type="submit" value="Send" class="primary" /></li>
+									</ul>
+								</form>
+							</section> -->
+				<section>
+					<h2>Connect!</h2>
+					<ul class="icons">
+						<!-- <li><a href="#" class="icon brands style2 fa-twitter"><span class="label">Twitter</span></a></li> -->
+						<!-- <li><a href="#" class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li> -->
+						<!-- <li><a href="#" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li> -->
+						<!-- <li><a href="#" class="icon brands style2 fa-dribbble"><span class="label">Dribbble</span></a></li> -->
+						<li><a href="https://github.com/nathan-ha" class="icon brands style2 fa-github"><span
+									class="label">GitHub</span></a></li>
+						<!-- <li><a href="#" class="icon brands style2 fa-500px"><span class="label">500px</span></a></li> -->
+						<!-- <li><a href="#" class="icon solid style2 fa-phone"><span class="label">Phone</span></a></li> -->
+						<li><a href="https://www.linkedin.com/in/ha-nathan/" class="icon brands style2 fa-linkedin-in"><span
+									class="label">LinkedIn</span></a></li>
+						<li><a href="mailto:nathanha562@gmail.com" class="icon solid style2 fa-envelope"><span
+									class="label">Email</span></a></li>
+					</ul>
+				</section>
+				<!-- <ul class="copyright">
+								<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul> -->
+			</div>
+		</footer>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="../assets/js/jquery.min.js"></script>
+	<script src="../assets/js/browser.min.js"></script>
+	<script src="../assets/js/breakpoints.min.js"></script>
+	<script src="../assets/js/util.js"></script>
+	<script src="../assets/js/main.js"></script>
+
+</body>
+
+</html>
