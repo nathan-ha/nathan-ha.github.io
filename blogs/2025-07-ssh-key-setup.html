@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<!--
+    Phantom by HTML5 UP
+    html5up.net | @ajlkn
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+    <head>
+        <title>Nathan Ha</title>
+        <meta charset="utf-8" />
+        <link rel="icon" type="images" href="../images/favicon-32x32.png" sizes="32x32" />
+        <link rel="icon" type="images" href="../images/favicon-16x16.png" sizes="16x16" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="../assets/css/main.css" />
+        <noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+        <style>
+            .spacer {
+                margin-bottom: 10px;
+            }
+        </style>
+    </head>
+    <body class="is-preload">
+        <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Header -->
+            <header id="header">
+                <div class="inner">
+                    <!-- Logo -->
+                    <a href="/" class="logo">
+                        <span class="symbol"><img src="../images/favicon.ico" alt="" /></span><span class="title">Nathan Ha</span>
+                    </a>
+                    <!-- Nav -->
+                    <nav>
+                        <ul>
+                            <li><a href="#menu">Menu</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+
+            <!-- Menu -->
+            <nav id="menu">
+                <h2>Menu</h2>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="../projects">Projects</a></li>
+                    <li><a href="../blogs">Blog</a></li>
+                </ul>
+            </nav>
+
+            <!-- Main -->
+            <div id="main">
+                <div class="inner">
+                    <h1>SSH Key Setup Guide</h1>
+
+                    <p>If you're using Windows, you need to use PowerShell for these commands to work. Linux and maybe Mac should work with these as well.</p>
+
+                    <h2>Check if you have an SSH key already:</h2>
+                    <pre><code>ls ~/.ssh</code></pre>
+
+                    <h2>Otherwise, generate a new key:</h2>
+                    <pre><code>ssh-keygen -t rsa -b 4096 -C "email@email.com"</code></pre>
+                    <p>The email part is optional because it's just a comment used to identify yourself. You can also change <code>rsa</code> to a different encryption if needed.</p>
+
+                    <h2>Display the public key:</h2>
+                    <pre><code>cat ~/.ssh/id_rsa.pub</code></pre>
+
+                    <p>Copy the public key to your clipboard. Now SSH into your server:</p>
+                    <pre><code>ssh username@server.name</code></pre>
+
+                    <h2>Run these commands on the server:</h2>
+                    <pre><code>mkdir -p ~/.ssh
+vim ~/.ssh/authorized_keys</code></pre>
+
+                    <p>
+                        Paste the key you copied earlier onto the next available line in the file. Since it's Vim, you would probably press 
+                        <code>Shift+G</code> to go to the end of the page, then <code>i</code> to enter insert mode, then <code>Ctrl+Shift+V</code> to paste the text. 
+                        Then press <code>Esc</code> and type <code>:wq</code> to save and quit.
+                    </p>
+
+                    <h2>This last step is probably optional, but you can also set the permissions for the SSH folder:</h2>
+                    <pre><code>chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys</code></pre>
+
+                    <hr>
+                    <br><br>
+
+                    <h2>Just for fun, this is what the permissions mean:</h2>
+
+                    <pre><code>7	111	read, write, execute (owner)
+0	000	no access (group)
+0	000	no access (others)
+</code></pre>
+
+                    <pre><code>6	110	read, write (owner)
+0	000	no access (group)
+0	000	no access (others)
+</code></pre>
+
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer id="footer">
+                <div class="inner">
+                    <section>
+                        <h2>Connect!</h2>
+                        <ul class="icons">
+                            <li><a href="https://github.com/nathan-ha" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
+                            <li><a href="https://www.linkedin.com/in/ha-nathan/" class="icon brands style2 fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+                            <li><a href="mailto:nathanha562@gmail.com" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+                        </ul>
+                    </section>
+                </div>
+            </footer>
+
+        </div>
+
+        <!-- Scripts -->
+        <script src="../assets/js/jquery.min.js"></script>
+        <script src="../assets/js/browser.min.js"></script>
+        <script src="../assets/js/breakpoints.min.js"></script>
+        <script src="../assets/js/util.js"></script>
+        <script src="../assets/js/main.js"></script>
+
+    </body>
+</html>
